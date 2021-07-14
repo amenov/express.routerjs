@@ -5,6 +5,10 @@ const Router = express.Router()
 module.exports = (routes, paths) => {
   const recursiveFilling = (routes, parentUrl = '', parentMiddleware = []) => {
     for (const route of routes) {
+      if (process.env.NODE_ENV === 'production' && route.dev) {
+        continue
+      }
+
       const url = parentUrl + (route.url ?? '')
       const middleware = [...parentMiddleware]
 
